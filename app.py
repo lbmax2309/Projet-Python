@@ -30,7 +30,7 @@ if page == "Advanced":
     with col3:
             portfolioInput = st.number_input("Merci de rentrer le capital de départ", min_value=500, value=10000, step=500)
 
-    run = st.form_submit_button("Appliquer")
+    run = st.form_submit_button(label="Appliquer")
     if run:
         data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
