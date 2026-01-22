@@ -20,8 +20,10 @@ if page == "Advanced":
     tickers = ["NVDA","AAPL", "GOOGL", "MSFT","AMZN","TSLA","META"]
     stopLoss = 0.9
 
-    col1, col2, col3, col4 = st.columns([3, 3, 3,1])
     with st.form("Paramètres"):
+        
+        col1, col2, col3, col4 = st.columns([3, 3, 3,1])
+
         with col1:
             period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
 
@@ -33,7 +35,7 @@ if page == "Advanced":
 
         with col4:
             run = st.form_submit_button(label="Appliquer")
-            
+
     if run:
         data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
