@@ -21,16 +21,16 @@ if page == "Advanced":
     stopLoss = 0.9
 
     col1, col2, col3 = st.columns([1, 1, 1])
+    with st.form("Paramètres"):
+        with col1:
+            period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
 
-    with col1:
-        period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
+        with col2:
+            lag = st.number_input("Merci de rentrer le nombre de retard pour la stratégie", min_value=1, step=1, value=2, format="%d")
+        with col3:
+                portfolioInput = st.number_input("Merci de rentrer le capital de départ", min_value=500, value=10000, step=500)
 
-    with col2:
-        lag = st.number_input("Merci de rentrer le nombre de retard pour la stratégie", min_value=1, step=1, value=2, format="%d")
-    with col3:
-            portfolioInput = st.number_input("Merci de rentrer le capital de départ", min_value=500, value=10000, step=500)
-
-    run = st.form_submit_button(label="Appliquer")
+        run = st.form_submit_button(label="Appliquer")
     if run:
         data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
