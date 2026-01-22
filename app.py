@@ -30,114 +30,116 @@ if page == "Advanced":
     with col3:
             portfolioInput = st.number_input("Merci de rentrer le capital de départ", min_value=500, value=10000, step=500)
 
-    data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
+    run = st.form_submit_button("Appliquer")
+    if run:
+        data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
-    with st.spinner("Chargement"):
-        class portfolioClass:
-            
-            def __init__(self, cash):
-                self.cash = cash
-                self.equities = {}
-                self.history = pd.DataFrame(columns=["Date","Ticker", "Order", "Number","Price","Active Position"])
-                self.total = cash
+        with st.spinner("Chargement"):
+            class portfolioClass:
+                
+                def __init__(self, cash):
+                    self.cash = cash
+                    self.equities = {}
+                    self.history = pd.DataFrame(columns=["Date","Ticker", "Order", "Number","Price","Active Position"])
+                    self.total = cash
 
-            def update(self, cash, equities,day):
-                self.cash = cash
-                self.equities =equities
-                # self.history = historyDf
-                self.total = self.cash + sum(equities[i]*data.loc[day][i] for i in equities.keys())
+                def update(self, cash, equities,day):
+                    self.cash = cash
+                    self.equities =equities
+                    # self.history = historyDf
+                    self.total = self.cash + sum(equities[i]*data.loc[day][i] for i in equities.keys())
 
-        ptfValue = pd.DataFrame()
+            ptfValue = pd.DataFrame()
 
-        def buy (data,portfolio,day,ticker):
-            nbEquityBuy = int(portfolio.cash*pctCash / (data.loc[day][ticker]*(1+fees)))
-            newCash = portfolio.cash - (data.loc[day][ticker] * nbEquityBuy)*(1+fees)
-            equities = portfolio.equities
-            if ticker in equities.keys():
-                equities[ticker] = nbEquityBuy + equities[ticker]
-            else:
-                equities[ticker] = nbEquityBuy
-            portfolio.history.loc[len(portfolio.history)]=[day,ticker,"Buy",nbEquityBuy,data.loc[day][ticker],True]
-            portfolio.update( newCash ,equities, day)
+            def buy (data,portfolio,day,ticker):
+                nbEquityBuy = int(portfolio.cash*pctCash / (data.loc[day][ticker]*(1+fees)))
+                newCash = portfolio.cash - (data.loc[day][ticker] * nbEquityBuy)*(1+fees)
+                equities = portfolio.equities
+                if ticker in equities.keys():
+                    equities[ticker] = nbEquityBuy + equities[ticker]
+                else:
+                    equities[ticker] = nbEquityBuy
+                portfolio.history.loc[len(portfolio.history)]=[day,ticker,"Buy",nbEquityBuy,data.loc[day][ticker],True]
+                portfolio.update( newCash ,equities, day)
 
-        def sell(data,portfolio,day,ticker, numberSell):
-            newCash = portfolio.cash + numberSell*data.loc[day][ticker]*(1-fees)
-            equities = portfolio.equities
-            equities[ticker] = equities[ticker] - numberSell 
-            portfolio.history.loc[len(portfolio.history)]=[day,ticker,"Sell",numberSell,data.loc[day][ticker],False]
-            portfolio.update( newCash ,equities, day)
+            def sell(data,portfolio,day,ticker, numberSell):
+                newCash = portfolio.cash + numberSell*data.loc[day][ticker]*(1-fees)
+                equities = portfolio.equities
+                equities[ticker] = equities[ticker] - numberSell 
+                portfolio.history.loc[len(portfolio.history)]=[day,ticker,"Sell",numberSell,data.loc[day][ticker],False]
+                portfolio.update( newCash ,equities, day)
 
-        def strat (df,portfolio , day, stratNumber, paramStrat2 = 0, paramStrat3 = 0):
+            def strat (df,portfolio , day, stratNumber, paramStrat2 = 0, paramStrat3 = 0):
 
-            if (stratNumber == 1):
-                nbEquityBuy = int(portfolio.cash / df.loc[day]["Open"])
-                newCash = portfolio.cash - df.loc[day]["Open"] * nbEquityBuy
-                portfolio.update( newCash + df.loc[day]["Close"]*nbEquityBuy ,0,0)
+                if (stratNumber == 1):
+                    nbEquityBuy = int(portfolio.cash / df.loc[day]["Open"])
+                    newCash = portfolio.cash - df.loc[day]["Open"] * nbEquityBuy
+                    portfolio.update( newCash + df.loc[day]["Close"]*nbEquityBuy ,0,0)
 
-            elif stratNumber == 2:
-                idx = df.index.get_loc(day)
-                if idx > paramStrat2:
-                    if df.iloc[idx]["Close"]/df.iloc[idx-paramStrat2]["Close"] - 1 > fees:
-                        buy(df,portfolio,day,idx)
+                elif stratNumber == 2:
+                    idx = df.index.get_loc(day)
+                    if idx > paramStrat2:
+                        if df.iloc[idx]["Close"]/df.iloc[idx-paramStrat2]["Close"] - 1 > fees:
+                            buy(df,portfolio,day,idx)
 
-                    elif df.iloc[idx]["Close"]/df.iloc[idx-paramStrat2]["Close"] -1 < -0.01:
-                        sell(df,portfolio,day,idx)
+                        elif df.iloc[idx]["Close"]/df.iloc[idx-paramStrat2]["Close"] -1 < -0.01:
+                            sell(df,portfolio,day,idx)
 
-            elif stratNumber == 3:
-                idx = df.index.get_loc(day)
-                if idx> paramStrat3:
-                    negative = True
-                    for i in range (-2,-paramStrat3-1,-1):
-                        if df.iloc[i+1]["Close"] > df.iloc[i]["Close"]:
-                            negative = False
-                    if not negative and df.iloc[idx]["Close"]>df.iloc[idx-1]["Close"]:
-                        buy(df,portfolio,day,idx)
-                    elif df.iloc[idx]["Close"]<df.iloc[idx-1]["Close"] and portfolio.nbEquity > 0 and df.iloc[idx]["Close"]> portfolio.priceEquity*(1+fees):
-                        sell(df,portfolio,day,idx)
+                elif stratNumber == 3:
+                    idx = df.index.get_loc(day)
+                    if idx> paramStrat3:
+                        negative = True
+                        for i in range (-2,-paramStrat3-1,-1):
+                            if df.iloc[i+1]["Close"] > df.iloc[i]["Close"]:
+                                negative = False
+                        if not negative and df.iloc[idx]["Close"]>df.iloc[idx-1]["Close"]:
+                            buy(df,portfolio,day,idx)
+                        elif df.iloc[idx]["Close"]<df.iloc[idx-1]["Close"] and portfolio.nbEquity > 0 and df.iloc[idx]["Close"]> portfolio.priceEquity*(1+fees):
+                            sell(df,portfolio,day,idx)
 
-        ptfValue = []
-        portfolio = portfolioClass(portfolioInput)
-        for day in data.index :
-            idx = data.index.get_loc(day)
-            if not idx < lag:
-                for ticker in tickers:
-                    negative = True
-                    for i in range (idx-1,idx-lag-1,-1):
-                        if data.iloc[i][ticker] > data.iloc[i-1][ticker]:
-                            negative = False
-                    if negative and data.iloc[idx][ticker]>data.iloc[idx-1][ticker]:
-                        buy(data,portfolio,day,ticker)
+            ptfValue = []
+            portfolio = portfolioClass(portfolioInput)
+            for day in data.index :
+                idx = data.index.get_loc(day)
+                if not idx < lag:
+                    for ticker in tickers:
+                        negative = True
+                        for i in range (idx-1,idx-lag-1,-1):
+                            if data.iloc[i][ticker] > data.iloc[i-1][ticker]:
+                                negative = False
+                        if negative and data.iloc[idx][ticker]>data.iloc[idx-1][ticker]:
+                            buy(data,portfolio,day,ticker)
 
-                active = portfolio.history.loc[portfolio.history["Active Position"]].copy()
+                    active = portfolio.history.loc[portfolio.history["Active Position"]].copy()
 
-                for r in active.itertuples():
-                    ticker = r.Ticker
-                    buy_price = r.Price
-                    price_today = data.loc[day, ticker]
-                    price_yday  = data.iloc[idx-1][ticker]
+                    for r in active.itertuples():
+                        ticker = r.Ticker
+                        buy_price = r.Price
+                        price_today = data.loc[day, ticker]
+                        price_yday  = data.iloc[idx-1][ticker]
 
-                    if (price_today < buy_price * stopLoss) or (
-                        (price_today < price_yday) and (price_today > buy_price * (1 + fees))
-                    ):
-                        sell(data, portfolio, day, ticker, r.Number)
-                        portfolio.history.loc[r.Index, "Active Position"] = False
-            
-            portfolio.update( portfolio.cash, portfolio.equities,day)
-            ptfValue.append(portfolio.total)
+                        if (price_today < buy_price * stopLoss) or (
+                            (price_today < price_yday) and (price_today > buy_price * (1 + fees))
+                        ):
+                            sell(data, portfolio, day, ticker, r.Number)
+                            portfolio.history.loc[r.Index, "Active Position"] = False
+                
+                portfolio.update( portfolio.cash, portfolio.equities,day)
+                ptfValue.append(portfolio.total)
 
-        ptfValue = pd.DataFrame(index=data.index, data = ptfValue, columns=["Portfolio"])
-        outputDf = pd.DataFrame(index= ["Rendements en %", "Ecart-type"],data={"Stratégie" : [(ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,round(ptfValue["Portfolio"].std(),2)]})
-        for ticker in tickers:
-            outputDf[ticker] = [round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2),round(data[ticker].std(),2)]
-        try :
-            st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
-            st.line_chart(data)
-            st.table(outputDf)
-            st.metric("Rendement stratégie", f"{round((ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,2)} %")
+            ptfValue = pd.DataFrame(index=data.index, data = ptfValue, columns=["Portfolio"])
+            outputDf = pd.DataFrame(index= ["Rendements en %", "Ecart-type"],data={"Stratégie" : [(ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,round(ptfValue["Portfolio"].std(),2)]})
             for ticker in tickers:
-                st.metric(f"Rendement buy and hold de {ticker}", f"{round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2)} %")
-        except Exception as e:
-            st.exception(e)
+                outputDf[ticker] = [round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2),round(data[ticker].std(),2)]
+            try :
+                st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
+                st.line_chart(data)
+                st.table(outputDf)
+                st.metric("Rendement stratégie", f"{round((ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,2)} %")
+                for ticker in tickers:
+                    st.metric(f"Rendement buy and hold de {ticker}", f"{round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2)} %")
+            except Exception as e:
+                st.exception(e)
 
 if page == "Basic":
     capitalInput = 1000
