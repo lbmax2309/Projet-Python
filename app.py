@@ -20,17 +20,20 @@ if page == "Advanced":
     tickers = ["NVDA","AAPL", "GOOGL", "MSFT","AMZN","TSLA","META"]
     stopLoss = 0.9
 
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3, col4 = st.columns([3, 3, 3,1])
     with st.form("Paramètres"):
         with col1:
             period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
 
         with col2:
             lag = st.number_input("Merci de rentrer le nombre de retard pour la stratégie", min_value=1, step=1, value=2, format="%d")
+
         with col3:
                 portfolioInput = st.number_input("Merci de rentrer le capital de départ", min_value=500, value=10000, step=500)
 
-        run = st.form_submit_button(label="Appliquer")
+        with col4:
+            run = st.form_submit_button(label="Appliquer")
+            
     if run:
         data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
