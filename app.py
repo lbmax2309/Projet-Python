@@ -15,19 +15,20 @@ page = st.sidebar.radio(label="",options=["Advanced", "Basic"])
 if page == "Advanced":
     st.header("📈 Stratégie sur les MAG 7")
     st.subheader("Manu va être content")
-    portfolioInput = st.number_input( min_value=500, value =10000, step = 500)
     fees = 0.005
     pctCash = 0.3
     tickers = ["NVDA","AAPL", "GOOGL", "MSFT","AMZN","TSLA","META"]
     stopLoss = 0.9
 
-    col1, col2 = st.columns([1, 1])
+    col1, col2, col3 = st.columns([1, 1, 1])
 
     with col1:
         period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
 
     with col2:
         lag = st.number_input("Merci de rentrer le nombre de retard pour la stratégie", min_value=1, step=1, value=2, format="%d")
+    with col3:
+            portfolioInput = st.number_input( min_value=500, value =10000, step = 500)
 
     data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
