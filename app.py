@@ -28,7 +28,7 @@ if page == "Advanced":
     with col2:
         lag = st.number_input("Merci de rentrer le nombre de retard pour la stratégie", min_value=1, step=1, value=2, format="%d")
     with col3:
-            portfolioInput = st.number_input( min_value=500, value =10000, step = 500)
+            portfolioInput = st.number_input( min_value=500, value=10000, step=500)
 
     data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
 
