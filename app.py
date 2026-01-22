@@ -15,7 +15,7 @@ page = st.sidebar.radio(label="",options=["Advanced", "Basic"])
 if page == "Advanced":
     st.header("📈 Stratégie sur les MAG 7")
     st.subheader("Manu va être content")
-    portfolioInput = 10000
+    portfolioInput = st.number_input( min_value=500, value =10000, step = 500)
     fees = 0.005
     pctCash = 0.3
     tickers = ["NVDA","AAPL", "GOOGL", "MSFT","AMZN","TSLA","META"]
