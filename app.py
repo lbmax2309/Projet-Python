@@ -22,7 +22,7 @@ if page == "Advanced":
 
     with st.form("Paramètres"):
         
-        col1, col2, col3, col4, col5 = st.columns([3, 3, 3,3,1])
+        col1, col2, col3, col4, col5 = st.columns([1, 2, 2,1,1])
 
         with col1:
             period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
