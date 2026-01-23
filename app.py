@@ -144,7 +144,7 @@ if page == "Advanced":
                 st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
                 st.subheader("Evolution des MAG 7")
                 st.line_chart(data)
-                st.table(outputDf)
+                st.dataframe(outputDf)
                 st.metric("Rendement stratégie", f"{round((ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,2)} %")
                 for ticker in tickers:
                     st.metric(f"Rendement buy and hold de {ticker}", f"{round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2)} %")
