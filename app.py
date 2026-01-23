@@ -37,7 +37,7 @@ if page == "Advanced":
             stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
 
         with col5:
-            run = st.form_submit_button(label="Appliquer",type="tertiary")
+            run = st.form_submit_button(label="Appliquer",type="primary")
 
     if run:
         data = yf.download(tickers, period=period, interval="1d", progress=False)["Close"]
