@@ -22,7 +22,7 @@ if page == "Advanced":
 
     with st.form("Paramètres"):
         
-        col1, col2, col3, col4 = st.columns([3, 3, 3,1])
+        col1, col2, col3, col4, col5 = st.columns([3, 3, 3,3,1])
 
         with col1:
             period = st.selectbox("Période", ["1mo", "3mo", "6mo", "1y", "2y", "5y"])
@@ -31,9 +31,12 @@ if page == "Advanced":
             lag = st.number_input("Lag de la stratégie", min_value=1, step=1, value=2, format="%d")
 
         with col3:
-                portfolioInput = st.number_input("Capital de départ", min_value=500, value=10000, step=500)
+            portfolioInput = st.number_input("Capital de départ", min_value=500, value=10000, step=500)
 
         with col4:
+            stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
+
+        with col5:
             run = st.form_submit_button(label="Appliquer")
 
     if run:
