@@ -140,7 +140,9 @@ if page == "Advanced":
             for ticker in tickers:
                 outputDf[ticker] = [round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2),round(data[ticker].std(),2)]
             try :
+                st.subheader("Evolution du portefeuille")
                 st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
+                st.subheader("Evolution des MAG 7")
                 st.line_chart(data)
                 st.table(outputDf)
                 st.metric("Rendement stratégie", f"{round((ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,2)} %")
