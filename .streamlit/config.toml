@@ -7,12 +7,8 @@ primaryColor = "#008024"
 backgroundColor = "#212221"
 secondaryBackgroundColor = "#2b2e2b"
 
-# Widgets
-# showWidgetBorder = true
-# borderColor = "#314158"
-
 # Dataframes
-dataframeHeaderBackgroundColor = "#0c003a"
+dataframeHeaderBackgroundColor = "#3d3d3d"
 dataframeBorderColor ="#ffffff1c"
 
 # Base text
