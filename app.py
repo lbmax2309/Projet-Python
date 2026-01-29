@@ -51,7 +51,7 @@ if page == "Advanced":
         with col4:
             stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
         with col5:
-            nbVente = st.number_input("Nombre de fois les fees", min_value=1, value=1, step=1,max_value=50)
+            nbVente = st.number_input("Nombre de fees", min_value=1, value=1, step=1,max_value=50)
         #Boutons pour lancer le calcul
         run = st.form_submit_button(label="Appliquer",type="primary")
 
