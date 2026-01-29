@@ -50,8 +50,8 @@ if page == "Advanced":
         with col4:
             stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
 
-    #Boutons pour lancer le calcul
-    run = st.form_submit_button(label="Appliquer",type="primary")
+        #Boutons pour lancer le calcul
+        run = st.form_submit_button(label="Appliquer",type="primary")
 
     #Les calculs s'éxécutent dès que l'on appuit sur le bouton appliquer
     #Cela évite que tout le code se lance dès que l'on change un paramètre
