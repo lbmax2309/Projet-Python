@@ -25,6 +25,7 @@ if page == "Advanced":
     #Titre de la page et paramètres pour les stratégies
     st.header("📈 Stratégie sur les MAG 7")
     st.subheader("Manu va être content")
+    st.markdown("Les actions des Sept Magnifiques sont celles de sept des entreprises technologiques les plus importantes et les plus influentes au monde")
     fees = 0.005
     pctCash = 0.3
     tickers = ["NVDA","AAPL", "GOOGL", "MSFT","AMZN","TSLA","META"]
