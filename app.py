@@ -84,7 +84,7 @@ if page == "Advanced":
             #Fonction d'achat
             def buy (data,portfolio,day,ticker):
                 #Nombre d'actions que l'on peut acheter
-                nbEquityBuy = int(portfolio.cash*pctCash / (data.loc[day][ticker]*(1+fees)))
+                nbEquityBuy = int(min(portfolio.cash,portfolio.total*pctCash) / (data.loc[day][ticker]*(1+fees)))
                 #Cash restant après l'achat
                 newCash = portfolio.cash - (data.loc[day][ticker] * nbEquityBuy)*(1+fees)
                 #Mise a jour des actions en portfeuille
