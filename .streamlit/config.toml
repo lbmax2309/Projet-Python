@@ -4,8 +4,8 @@ base = "dark"
 # General color setup
 textColor = "#ffffff"
 primaryColor = "#008024"
-backgroundColor = "#0e2616"
-secondaryBackgroundColor = "#082010"
+backgroundColor = "#212221"
+secondaryBackgroundColor = "#2b2e2b"
 
 # Widgets
 # showWidgetBorder = true
