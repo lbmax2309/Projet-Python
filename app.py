@@ -53,6 +53,7 @@ if page == "Advanced":
         #Boutons pour lancer le calcul
         with col5:
             st.markdown("")
+            st.markdown("")
             run = st.form_submit_button(label="Appliquer",type="primary")
 
     #Les calculs s'éxécutent dès que l'on appuit sur le bouton appliquer
