@@ -17,6 +17,6 @@ font = "'Special Gothic Expanded One':https://fonts.googleapis.com/css2?family=S
 # baseFontSize = 14
 
 # Heading text
-headingFont = "Space Grotesk"
-headingFontWeights = [500, 500, 500, 500, 500, 500]
-headingFontSizes = ["5rem", "3rem", "3rem"]
+# headingFont = "Space Grotesk"
+# headingFontWeights = [500, 500, 500, 500, 500, 500]
+# headingFontSizes = ["5rem", "3rem", "3rem"]
