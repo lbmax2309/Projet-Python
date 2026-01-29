@@ -2,7 +2,7 @@
 base = "dark"
 
 # General color setup
-textColor = "#ffffff"
+textColor = "#ffffff48"
 primaryColor = "#008024"
 backgroundColor = "#11102d"
 secondaryBackgroundColor = "#08081c"
