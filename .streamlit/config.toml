@@ -5,7 +5,7 @@ base = "dark"
 textColor = "#ffffff"
 primaryColor = "#008024"
 backgroundColor = "#11102d"
-secondaryBackgroundColor = "#1b1a48"
+secondaryBackgroundColor = "#0d0d39"
 
 # Widgets
 # showWidgetBorder = true
