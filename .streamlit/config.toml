@@ -3,6 +3,7 @@ base = "dark"
 
 # General color setup
 textColor = "#ffffff"
+textColor
 primaryColor = "#008024"
 backgroundColor = "#11102d"
 secondaryBackgroundColor = "#08081c"
@@ -12,7 +13,7 @@ secondaryBackgroundColor = "#08081c"
 # borderColor = "#314158"
 
 # Dataframes
-dataframeHeaderBackgroundColor = "#3300ff"
+dataframeHeaderBackgroundColor = "#0c003a"
 dataframeBorderColor ="#ffffff"
 
 # Base text
