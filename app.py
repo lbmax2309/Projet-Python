@@ -201,7 +201,7 @@ if page == "Advanced":
                 #Affichage dans streamlit : titres, graphiques et tableaux
                 st.subheader("Evolution du portefeuille")
                 st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
-                st.area_chart(holdingsValue, x = holdingsValue.index, y = holdingsValue.columns)
+                st.area_chart(holdingsValue)
                 st.subheader("Evolution des MAG 7")
                 st.line_chart(data)
                 st.dataframe(outputDf.style.format("{:.2f}").background_gradient(cmap="RdYlGn", axis=1, subset=pd.IndexSlice[["Rendements en %"], :]))
