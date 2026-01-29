@@ -187,7 +187,7 @@ if page == "Advanced":
                         holdingsValue.loc[day,ticker] = portfolio.equities[ticker]*data.loc[day, ticker]
                     except :
                         holdingsValue.loc[day,ticker] = float(0)
-                holdingsValue.loc[day,"Cash"] = portfolio.cash
+                holdingsValue.loc[day,"Cash"] = float(portfolio.cash)
 
                 ptfValue.append(portfolio.total)
 
@@ -200,8 +200,8 @@ if page == "Advanced":
             try :
                 #Affichage dans streamlit : titres, graphiques et tableaux
                 st.subheader("Evolution du portefeuille")
-                st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
-                st.area_chart(holdingsValue)
+                # st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
+                st.area_chart(holdingsValue, x=holdingsValue.index.name, y=holdingsValue.columns, stack=True)
                 st.subheader("Evolution des MAG 7")
                 st.line_chart(data)
                 st.dataframe(outputDf.style.format("{:.2f}").background_gradient(cmap="RdYlGn", axis=1, subset=pd.IndexSlice[["Rendements en %"], :]))
