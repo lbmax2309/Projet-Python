@@ -13,7 +13,7 @@ borderColor = "#314158"
 
 # Dataframes
 dataframeHeaderBackgroundColor = "#90a9d3"
-dataframeHeaderBackgroundColor = "#11102d"
+dataframeHeaderColor = "#11102d"
 
 # Base text
 font = "'Special Gothic Expanded One':https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap"
