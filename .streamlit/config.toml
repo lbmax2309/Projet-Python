@@ -16,8 +16,8 @@ secondaryBackgroundColor = "#08081c"
 
 # Base text
 font = "'Special Gothic Expanded One':https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap"
-baseFontWeight = 300
-baseFontSize = 14
+# baseFontWeight = 300
+# baseFontSize = 14
 
 # Heading text
 headingFont = "Space Grotesk"
