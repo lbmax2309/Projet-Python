@@ -84,7 +84,7 @@ if page == "Advanced":
             #Fonction d'achat
             def buy (data,portfolio,day,ticker):
                 #Nombre d'actions que l'on peut acheter
-                nbEquityBuy = int(min(portfolio.cash,portfolio.total*pctCash) / (data.loc[day][ticker]*(1+fees)))
+                nbEquityBuy = int(min(portfolio.cash, portfolio.total*pctCash) / (data.loc[day][ticker]*(1+fees)))
                 #Cash restant après l'achat
                 newCash = portfolio.cash - (data.loc[day][ticker] * nbEquityBuy)*(1+fees)
                 #Mise a jour des actions en portfeuille
@@ -203,7 +203,7 @@ if page == "Advanced":
                 #Affichage dans streamlit : titres, graphiques et tableaux
                 st.subheader("Evolution du portefeuille")
                 # st.line_chart(ptfValue, y_label= "Valeur du portefeuille")
-                st.area_chart(holdingsValue, x=holdingsValue.index.name, y=holdingsValue.columns, stack=True)
+                st.area_chart(holdingsValue, x=holdingsValue.index.name, y=cols, stack=True)
                 st.subheader("Evolution des MAG 7")
                 st.line_chart(data)
                 st.dataframe(outputDf.style.format("{:.2f}").background_gradient(cmap="RdYlGn", axis=1, subset=pd.IndexSlice[["Rendements en %"], :]))
