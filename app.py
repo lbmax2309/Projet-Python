@@ -146,6 +146,9 @@ if page == "Advanced":
 
             #Liste de la valeur du portfeuille
             ptfValue = []
+            cols = tickers.copy()
+            cols.append("Cash")
+            holdingsValue = pd.DataFrame(columns= cols)
             portfolio = portfolioClass(portfolioInput)
             #On parcours tous les jours des données pour éxécuter la stratégie chaque jour
             for day in data.index :
@@ -179,6 +182,10 @@ if page == "Advanced":
                             portfolio.history.loc[r.Index, "Active Position"] = False
                 
                 portfolio.update( portfolio.cash, portfolio.equities,day)
+                for ticker in tickers :
+                    holdingsValue.loc[day,ticker] = portfolio.equities[ticker]*data.loc[day, ticker]
+                holdingsValue.loc[day,"Cash"] = portfolio.cash
+
                 ptfValue.append(portfolio.total)
 
             #Data frame des valeurs de portefeuille pour un faire un graphique
@@ -199,6 +206,8 @@ if page == "Advanced":
                     st.metric(f"Rendement buy and hold de {ticker}", f"{round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2)} %")
                 st.subheader("Historique de movements")
                 st.dataframe(portfolio.history)
+                st.subheader("Historique position")
+                st.dataframe(holdingsValue)
             except Exception as e:
                 st.exception(e)
 
