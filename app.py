@@ -149,7 +149,7 @@ if page == "Advanced":
             #Liste de la valeur du portfeuille
             ptfValue = []
             cols = tickers.copy()
-            cols.append("_Cash")
+            cols.append(" Cash")
             holdingsValue = pd.DataFrame(columns= cols)
             portfolio = portfolioClass(portfolioInput)
             #On parcours tous les jours des données pour éxécuter la stratégie chaque jour
@@ -189,7 +189,7 @@ if page == "Advanced":
                         holdingsValue.loc[day,ticker] = portfolio.equities[ticker]*data.loc[day, ticker]
                     except :
                         holdingsValue.loc[day,ticker] = float(0)
-                holdingsValue.loc[day,"_Cash"] = float(portfolio.cash)
+                holdingsValue.loc[day," Cash"] = float(portfolio.cash)
 
                 ptfValue.append(portfolio.total)
 
