@@ -183,7 +183,10 @@ if page == "Advanced":
                 
                 portfolio.update( portfolio.cash, portfolio.equities,day)
                 for ticker in tickers :
-                    holdingsValue.loc[day,ticker] = portfolio.equities[ticker]*data.loc[day, ticker]
+                    try :
+                        holdingsValue.loc[day,ticker] = portfolio.equities[ticker]*data.loc[day, ticker]
+                    except :
+                        holdingsValue.loc[day,ticker] = 0
                 holdingsValue.loc[day,"Cash"] = portfolio.cash
 
                 ptfValue.append(portfolio.total)
