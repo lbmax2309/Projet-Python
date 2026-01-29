@@ -304,5 +304,5 @@ if page == "Basic":
         st.line_chart(ptfValue)
         st.line_chart(data["Close"])
 
-    except :
-        None
+    except Exception as e:
+        st.exception(e)
