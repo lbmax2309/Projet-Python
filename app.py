@@ -33,7 +33,7 @@ if page == "Advanced":
     # 1 ligne avec les différents paramètres modifiables depuis la page
     with st.form("Paramètres"):
         
-        col1, col2, col3, col4, col5 = st.columns([1, 2, 2,1,1])
+        col1, col2, col3, col4, col5 = st.columns([1, 2, 1,1,2])
 
         #Période de données depuis yfinance
         with col1:
