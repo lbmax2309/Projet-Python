@@ -52,10 +52,10 @@ if page == "Advanced":
             stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
 
         with col5:
-            nbVente = st.number_input("Nombre de fees", min_value=1, value=1, step=1,max_value=50)
+            nbVente = st.number_input("Nombre de fees pour vendre", min_value=1, value=1, step=1,max_value=50)
 
         with col6:
-            pctCash = st.number_input("Pourcentage de cash à investir", min_value=10, value=10, step=10,max_value=100)/100
+            pctCash = st.number_input("Cash à investir (%)", min_value=10, value=10, step=10,max_value=100)/100
         
         #Boutons pour lancer le calcul
         run = st.form_submit_button(label="Appliquer",type="primary")
@@ -214,7 +214,7 @@ if page == "Advanced":
                 st.metric("Rendement stratégie", f"{round((ptfValue["Portfolio"].iloc[-1]/ptfValue["Portfolio"].iloc[0]-1)*100,2)} %")
                 for ticker in tickers:
                     st.metric(f"Rendement buy and hold de {ticker}", f"{round((data[ticker].iloc[-1]/data[ticker].iloc[0]-1)*100,2)} %")
-                st.subheader("Historique de movements")
+                st.subheader("Historique de mouvements")
                 st.dataframe(portfolio.history)
                 st.subheader("Historique position")
                 st.dataframe(holdingsValue)
