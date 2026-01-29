@@ -32,7 +32,7 @@ if page == "Advanced":
     # 1 ligne avec les différents paramètres modifiables depuis la page
     with st.form("Paramètres"):
         
-        col1, col2, col3, col4, col5, col6 = st.columns([1, 2, 1,1,1,1])
+        col1, col2, col3 = st.columns([1, 1,1])
 
         #Période de données depuis yfinance
         with col1:
@@ -46,13 +46,17 @@ if page == "Advanced":
         with col3:
             portfolioInput = st.number_input("Capital de départ", min_value=500, value=10000, step=500)
 
+        col4, col5, col6 = st.columns([1, 1,1])
         #Stop loss voulu (en %)
         with col4:
             stopLoss = 1 -st.number_input("Stop loss (%)", min_value=1, value=10, step=1,max_value=50)/100
+
         with col5:
             nbVente = st.number_input("Nombre de fees", min_value=1, value=1, step=1,max_value=50)
+
         with col6:
             pctCash = st.number_input("Pourcentage de cash à investir", min_value=10, value=10, step=10,max_value=100)/100
+        
         #Boutons pour lancer le calcul
         run = st.form_submit_button(label="Appliquer",type="primary")
 
