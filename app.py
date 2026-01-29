@@ -41,7 +41,7 @@ if page == "Advanced":
 
         #Retard pour la stratégie
         with col2:
-            lag = st.number_input("Lag de la stratégie", min_value=1, step=1, value=2, format="%d")
+            lag = st.number_input("Nombre de baisses avant la hausse", min_value=1, step=1, value=2, format="%d")+1
 
         #Capital de départ
         with col3:
